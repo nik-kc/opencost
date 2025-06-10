@@ -1438,6 +1438,7 @@ func getPodServices(cache clustercache.ClusterCache, podList []*clustercache.Pod
 		if service.SpecSelector != nil && len(service.SpecSelector) > 0 {
 			s = labels.Set(service.SpecSelector).AsSelectorPreValidated()
 		}
+		s = s.DeepCopySelector()
 		for _, pod := range podList {
 			labelSet := labels.Set(pod.Labels)
 			if s.Matches(labelSet) && pod.Namespace == namespace {
